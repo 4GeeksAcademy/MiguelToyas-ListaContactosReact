@@ -1,6 +1,21 @@
 import React from "react";
+import axios from "axios"
 
 function CardContacto(props) {
+
+  const borrarContacto = async(e) => {
+    e.preventDefault();
+    try{
+      const response = await axios.delete(`https://playground.4geeks.com/contact/agendas/mitoperni/contacts/${props.id}`)
+      if (response){
+        
+      }
+    }catch(error){
+      console.error(error);
+    }
+  }
+
+
   return (
       <div className="card mx-auto" style={{ width: "22rem" }}>
         <img
@@ -23,12 +38,9 @@ function CardContacto(props) {
           </li>
         </ul>
         <div className="card-body">
-          <a href="#" className="card-link">
-            Card link
-          </a>
-          <a href="#" className="card-link">
-            Another link
-          </a>
+          <button type="button" className="btn btn-danger">
+            Borrar contacto
+          </button>
         </div>
       </div>
   );
