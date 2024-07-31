@@ -24,28 +24,12 @@ function ListaDeContactos() {
     getContacts();
   }, []);
 
-  //address
-  // :
-  // "Avenida Falsa,2"
-  // email
-  // :
-  // "prueba@gmail.com"
-  // id
-  // :
-  // 45
-  // name
-  // :
-  // "Miguel"
-  // phone
-  // :
-  // "612452362"
-
   return (
-    <div>
+    <div className="mx-4">
       <h1>Lista de Contactos:</h1>
       <div className="row mx-4 my-4">
         {contactos.map((contacto, index) => (
-          <div key={index} className="col-4">
+          <div key={index} className="col-4 my-3">
             <CardContacto
             name = {contacto.name}
             phone = {contacto.phone}
