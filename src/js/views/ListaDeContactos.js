@@ -6,7 +6,10 @@ import { Context } from "../Context-Provider/ContextProvider"
 
 function ListaDeContactos() {
   const context = useContext(Context);
-   
+  
+  useEffect(() => {
+    context.getContacts()
+  },[])
 
   return (
     <div className="mx-4">
