@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function FormNuevoContacto() {
   const [datosForm, setDatosForm] = useState({
@@ -8,12 +9,14 @@ function FormNuevoContacto() {
     email: "",
     address: "",
   });
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setDatosForm({
       ...datosForm,
       [e.target.name]: e.target.value,
-    }); 
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -27,16 +30,24 @@ function FormNuevoContacto() {
       );
       console.log("Respuesta del servidor:", response); // Verifica la respuesta del servidor
       console.log("Usuario registrado:", response.data);
-      alert("Nuevo contacto creado");
+      setShowModal(true);
     } catch (error) {
       console.error("Error registrando el nuevo contacto:", error);
     }
     setDatosForm({
-        name: "",
-        phone: "",
-        email: "",
-        address: "",
-      })
+      name: "",
+      phone: "",
+      email: "",
+      address: "",
+    });
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleGoToContactList = () => {
+    navigate("/contactos");
   };
 
   return (
@@ -69,6 +80,49 @@ function FormNuevoContacto() {
           </button>
         </div>
       </form>
+
+      {showModal && (
+        <div
+          className={`modal fade ${showModal ? "show" : ""}`}
+          style={{ display: showModal ? "block" : "none" }}
+          tabIndex="-1"
+          role="dialog"
+        >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Nuevo Contacto Creado</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={handleCloseModal}
+                ></button>
+              </div>
+              <div className="modal-body">
+                El nuevo contacto ha sido creado exitosamente.
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleCloseModal}
+                >
+                  Crear Nuevo Contacto
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleGoToContactList}
+                >
+                  Acceder a la Lista de Contactos
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {showModal && <div className="modal-backdrop fade show"></div>}
     </div>
   );
 }
