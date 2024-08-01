@@ -39,8 +39,8 @@ function DetalleContacto() {
       );
       if (response) {
         console.log(contacto.name + " Eliminado con éxito");
-        context.getContacts();
-        navigate("/contactos"); // Redirigir a la lista de contactos después de eliminar
+        context.setContactos(prevContacts => prevContacts.filter(c => c.id !== parseInt(id)));
+        navigate("/contactos");
       }
     } catch (error) {
       console.error(error);

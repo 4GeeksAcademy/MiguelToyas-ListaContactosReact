@@ -1,29 +1,34 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState, useMemo } from "react";
 import CardContacto from "../component/CardContacto";
 import { Context } from "../Context-Provider/ContextProvider";
 
 function ListaDeContactos() {
-  const { contactos, setContactos, getContacts } = useContext(Context);
+  const { contactos, getContacts } = useContext(Context);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getContacts();
-  }, []);
+    const fetchContacts = async () => {
+      setIsLoading(true);
+      await getContacts();
+      setIsLoading(false);
+    };
+    fetchContacts();
+  }, [getContacts]);
 
-  useEffect(() => {
-    if (contactos.length > 0) {
-      const sortedContacts = [...contactos].sort((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-      setContactos(sortedContacts);
-    }
-  }, [contactos, setContactos]);
+  const sortedContacts = useMemo(() => {
+    return [...contactos].sort((a, b) => a.name.localeCompare(b.name));
+  }, [contactos]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="mx-4">
       <h1>Lista de Contactos:</h1>
       <h5 className="text-secondary">Los contactos aparecen ordenados alfabéticamente.</h5>
       <div className="row mx-4 my-4">
-        {contactos.map((contacto, index) => (
+        {sortedContacts.map((contacto, index) => (
           <div key={contacto.id || index} className="col-4 my-3">
             <CardContacto
               name={contacto.name}
