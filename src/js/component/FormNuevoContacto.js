@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../Context-Provider/ContextProvider";
+import { useContext } from "react";
 
 function FormNuevoContacto() {
   const [datosForm, setDatosForm] = useState({
@@ -11,6 +13,8 @@ function FormNuevoContacto() {
   });
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const { addContact } = useContext(Context);
+
 
   const handleChange = (e) => {
     setDatosForm({
@@ -21,15 +25,13 @@ function FormNuevoContacto() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Datos del formulario:", datosForm);
     try {
-      console.log("Intentando registrar nuevo contacto...");
       const response = await axios.post(
         `https://playground.4geeks.com/contact/agendas/mitoperni/contacts`,
         datosForm
       );
-      console.log("Respuesta del servidor:", response); // Verifica la respuesta del servidor
       console.log("Usuario registrado:", response.data);
+      addContact(response.data);
       setShowModal(true);
     } catch (error) {
       console.error("Error registrando el nuevo contacto:", error);
@@ -105,10 +107,10 @@ function FormNuevoContacto() {
               <div className="modal-footer">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-success"
                   onClick={handleCloseModal}
                 >
-                  Crear Nuevo Contacto
+                  Crear Otro Contacto
                 </button>
                 <button
                   type="button"

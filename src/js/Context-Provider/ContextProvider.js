@@ -3,29 +3,31 @@ import axios from "axios";
 
 const Context = createContext();
 
-
 const ContextProvider = ({ children }) => {
-    const [contactos, setContactos] = useState([]);
+  const [contactos, setContactos] = useState([]);
 
-    const getContacts = async () => {
-      try {
-        const response = await axios.get(
-          "https://playground.4geeks.com/contact/agendas/mitoperni"
-        );
-        setContactos(response.data.contacts);
-        console.log(contactos);
-      } catch (error) {
-        console.error(error);
-      }
+  const getContacts = async () => {
+    try {
+      const response = await axios.get(
+        "https://playground.4geeks.com/contact/agendas/mitoperni"
+      );
+      setContactos(response.data.contacts);
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    useEffect(() => {  
-      getContacts();
-    }, []); 
+  const addContact = (newContact) => {
+    setContactos(prevContacts => [...prevContacts, newContact]);
+  };
+
+  useEffect(() => {  
+    getContacts();
+  }, []); 
 
   return (
     <Context.Provider
-      value={{ contactos, setContactos, getContacts }}
+      value={{ contactos, setContactos, getContacts, addContact }}
     >
       {children}
     </Context.Provider>
