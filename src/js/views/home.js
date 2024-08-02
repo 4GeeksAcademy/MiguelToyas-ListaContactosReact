@@ -17,6 +17,7 @@ export const Home = () => {
   const checkLogin = () => {
     if (context.userName){
       setShowButtons(true);
+      setChangeInputAlert(false)
     }
     else {
       setShowButtons(false);
