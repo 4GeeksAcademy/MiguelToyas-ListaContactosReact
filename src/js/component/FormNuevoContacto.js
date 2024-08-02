@@ -31,7 +31,7 @@ function FormNuevoContacto() {
         `https://playground.4geeks.com/contact/agendas/${context.userName}/contacts`,
         datosForm
       );
-      console.log("Usuario registrado:", response.data);
+      console.log("Usuario registrado:");
       addContact(response.data);
       setShowModal(true);
     } catch (error) {

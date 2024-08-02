@@ -17,6 +17,13 @@ function DetalleContacto() {
   });
   const navigate = useNavigate();
 
+  useEffect(()=>{
+    if(!context.userName){
+      alert("Tienes que iniciar sesión para acceder a la agenda")
+      navigate('/')
+    }
+  },[])
+
   useEffect(() => {
     if (context.contactos.length > 0) {
       const selectedContact = context.contactos.find(
@@ -35,7 +42,7 @@ function DetalleContacto() {
   const borrarContacto = async () => {
     try {
       const response = await axios.delete(
-        `https://playground.4geeks.com/contact/agendas/mitoperni/contacts/${id}`
+        `https://playground.4geeks.com/contact/agendas/${context.userName}/contacts/${id}`
       );
       if (response) {
         console.log(contacto.name + " Eliminado con éxito");
@@ -51,7 +58,7 @@ function DetalleContacto() {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `https://playground.4geeks.com/contact/agendas/mitoperni/contacts/${id}`,
+        `https://playground.4geeks.com/contact/agendas/${context.userName}/contacts/${id}`,
         formData
       );
       if (response) {

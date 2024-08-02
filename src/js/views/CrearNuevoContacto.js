@@ -9,6 +9,7 @@ function CrearNuevoContacto() {
 
   useEffect(()=>{
     if(!context.userName){
+      alert("Tienes que iniciar sesión para acceder a la agenda")
       navigate('/')
     }
   },[])
