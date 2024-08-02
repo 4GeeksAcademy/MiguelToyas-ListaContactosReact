@@ -1,7 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FormNuevoContacto from "../component/FormNuevoContacto";
+import { Context } from "../Context-Provider/ContextProvider";
+import { useNavigate } from "react-router";
 
 function CrearNuevoContacto() {
+  const context = useContext(Context)
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(!context.userName){
+      navigate('/')
+    }
+  },[])
   
 
   return (

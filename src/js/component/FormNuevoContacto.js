@@ -14,6 +14,7 @@ function FormNuevoContacto() {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const { addContact } = useContext(Context);
+  const context = useContext(Context)
 
 
   const handleChange = (e) => {
@@ -27,7 +28,7 @@ function FormNuevoContacto() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `https://playground.4geeks.com/contact/agendas/mitoperni/contacts`,
+        `https://playground.4geeks.com/contact/agendas/${context.userName}/contacts`,
         datosForm
       );
       console.log("Usuario registrado:", response.data);

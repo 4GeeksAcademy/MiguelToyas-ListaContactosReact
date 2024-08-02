@@ -1,6 +1,8 @@
 import React, { useEffect, useContext, useState, useMemo } from "react";
 import CardContacto from "../component/CardContacto";
 import { Context } from "../Context-Provider/ContextProvider";
+import { useNavigate } from "react-router";
+
 
 function ListaDeContactos() {
   const { contactos, getContacts } = useContext(Context);
@@ -15,12 +17,21 @@ function ListaDeContactos() {
     fetchContacts();
   }, [getContacts]);
 
+  const context = useContext(Context)
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(!context.userName){
+      navigate('/')
+    }
+  },[])
+
   const sortedContacts = useMemo(() => {
     return [...contactos].sort((a, b) => a.name.localeCompare(b.name));
   }, [contactos]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="fs-1 m-5">Loading...</div>;
   }
 
   return (
